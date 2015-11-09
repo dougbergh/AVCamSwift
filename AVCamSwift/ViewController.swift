@@ -39,7 +39,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var lockInterfaceRotation: Bool = false
     
     @IBOutlet weak var previewView: AVCamPreviewView!
-    @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var snapButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
     
@@ -134,21 +133,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             
             
-            let movieFileOutput: AVCaptureMovieFileOutput = AVCaptureMovieFileOutput()
-            if session.canAddOutput(movieFileOutput){
-                session.addOutput(movieFileOutput)
-
-                
-                let connection: AVCaptureConnection? = movieFileOutput.connectionWithMediaType(AVMediaTypeVideo)
-                let stab = connection?.supportsVideoStabilization
-                if (stab != nil) {
-                    connection!.enablesVideoStabilizationWhenAvailable = true
-                }
-                
-                self.movieFileOutput = movieFileOutput
-                
-            }
-
             let stillImageOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
             if session.canAddOutput(stillImageOutput){
                 stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
@@ -182,11 +166,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 (note: NSNotification?) in
                 var strongSelf: ViewController = weakSelf!
                 dispatch_async(strongSelf.sessionQueue, {
-//                    strongSelf.session?.startRunning()
                     if let sess = strongSelf.session{
                         sess.startRunning()
                     }
-//                    strongSelf.recordButton.title  = NSLocalizedString("Record", "Recording button record title")
                 })
                 
             })
@@ -236,16 +218,11 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation = AVCaptureVideoOrientation(rawValue: toInterfaceOrientation.rawValue)!
         
-//        if let layer = self.previewView.layer as? AVCaptureVideoPreviewLayer{
-//            layer.connection.videoOrientation = self.convertOrientation(toInterfaceOrientation)
-//        }
-        
     }
     
     override func shouldAutorotate() -> Bool {
         return !self.lockInterfaceRotation
     }
-//    observeValueForKeyPath:ofObject:change:context:
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
 
@@ -262,16 +239,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             dispatch_async(dispatch_get_main_queue(), {
                 
                 if isRecording {
-                    self.recordButton.titleLabel!.text = "Stop"
-                    self.recordButton.enabled = true
-//                    self.snapButton.enabled = false
                     self.cameraButton.enabled = false
                     
                 }else{
-//                    self.snapButton.enabled = true
-
-                    self.recordButton.titleLabel!.text = "Record"
-                    self.recordButton.enabled = true
                     self.cameraButton.enabled = true
                     
                 }
@@ -442,36 +412,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     // MARK: Actions
     
-    @IBAction func toggleMovieRecord(sender: AnyObject) {
-        
-        self.recordButton.enabled = false
-        
-        dispatch_async(self.sessionQueue, {
-            if !self.movieFileOutput!.recording{
-                self.lockInterfaceRotation = true
-                
-                if UIDevice.currentDevice().multitaskingSupported {
-                    self.backgroundRecordId = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({})
-                    
-                }
-                
-//                self.movieFileOutput!.connectionWithMediaType(AVMediaTypeVideo).videoOrientation =
-//                    AVCaptureVideoOrientation(rawValue: (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation.rawValue )!
-//                
-//                // Turning OFF flash for video recording
-//                ViewController.setFlashMode(AVCaptureFlashMode.Off, device: self.videoDeviceInput!.device)
-//                
-//                let outputFilePath: String = NSTemporaryDirectory().stringByAppendingPathComponent( "movie".stringByAppendingPathExtension("mov")!)
-//                
-//                self.movieFileOutput!.startRecordingToOutputFileURL(NSURL.fileURLWithPath(outputFilePath), recordingDelegate: self)
-                
-                
-            }else{
-                self.movieFileOutput!.stopRecording()
-            }
-        })
-        
-    }
     @IBAction func snapStillImage(sender: AnyObject) {
         print("snapStillImage")
         dispatch_async(self.sessionQueue, {
@@ -491,15 +431,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 
                 if error == nil {
                     let data:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                    let image:UIImage = UIImage( data: data)!
-//                    
-//                    let libaray:ALAssetsLibrary = ALAssetsLibrary()
-//                    let orientation: ALAssetOrientation = ALAssetOrientation(rawValue: image.imageOrientation.rawValue)!
-//                    libaray.writeImageToSavedPhotosAlbum(image.CGImage, orientation: orientation, completionBlock: nil)
-//                    
-//                    print("save to album")
 
-                    self.saveImage( image )
+                    self.saveImage( data )
                     
                 }else{
 //                    print("Did not capture still image")
@@ -519,7 +452,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         print("change camera")
         
         self.cameraButton.enabled = false
-        self.recordButton.enabled = false
         self.snapButton.enabled = false
         
         dispatch_async(self.sessionQueue, {
@@ -576,7 +508,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
             
             dispatch_async(dispatch_get_main_queue(), {
-                self.recordButton.enabled = true
                 self.snapButton.enabled = true
                 self.cameraButton.enabled = true
             })
@@ -595,7 +526,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
     }
     
-    func saveImage (image:UIImage) {
+    func saveImage (data:NSData) {
         
         let nsDocumentDirectory = NSSearchPathDirectory.DocumentDirectory
         let nsUserDomainMask = NSSearchPathDomainMask.UserDomainMask
@@ -603,8 +534,17 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
         if paths.count > 0 {
             let dirPath = paths[0]
-            let writePath = "\(dirPath)/Image2.png"
-            UIImagePNGRepresentation(image)!.writeToFile(writePath, atomically: true)
+            let writePath = "\(dirPath)/Image.jpg"
+            
+//            let data2: String = "HI MOM"
+//            do {
+//                try data2.writeToFile(writePath, atomically: true, encoding: NSUTF8StringEncoding)
+//            } catch {
+//                print( "ERROR writing file" )
+//            }
+
+            data.writeToFile(writePath, atomically: true)
+            print( "wrote to \(writePath)" )
         }
     }
 }

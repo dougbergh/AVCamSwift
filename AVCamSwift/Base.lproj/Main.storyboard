@@ -20,17 +20,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nN-lk-uog" customClass="AVCamPreviewView" customModule="AVCamSwift" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="meX-Fp-zCX">
-                                        <rect key="frame" x="193" y="542" width="64" height="36"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Record">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toggleMovieRecord:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="n2u-DA-s2e"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gj1-9G-vwL">
                                         <rect key="frame" x="277" y="542" width="47" height="36"/>
                                         <animations/>
@@ -42,15 +31,15 @@
                                             <action selector="snapStillImage:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="osp-gP-i9e"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="02i-Lm-pY6">
-                                        <rect key="frame" x="344" y="542" width="70" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4o-Mn-rmj">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Camera">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" title="View Image"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="161" y="476" width="79" height="30"/>
+                                        </variation>
                                         <connections>
-                                            <action selector="changeCamera:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="WsJ-Qv-rwF"/>
+                                            <segue destination="NcJ-P2-BkD" kind="show" id="AxO-dI-5lS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -58,12 +47,18 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="gj1-9G-vwL" secondAttribute="bottom" constant="22" id="8Dg-dJ-h7Z"/>
-                                    <constraint firstItem="gj1-9G-vwL" firstAttribute="bottom" secondItem="02i-Lm-pY6" secondAttribute="bottom" id="9Bg-KW-dLH"/>
-                                    <constraint firstItem="meX-Fp-zCX" firstAttribute="trailing" secondItem="gj1-9G-vwL" secondAttribute="leading" constant="-20" id="D0n-iH-aeX"/>
                                     <constraint firstAttribute="centerX" secondItem="gj1-9G-vwL" secondAttribute="centerX" id="Hje-82-NFD"/>
-                                    <constraint firstItem="02i-Lm-pY6" firstAttribute="leading" secondItem="gj1-9G-vwL" secondAttribute="trailing" constant="20" id="bgc-pD-bWG"/>
-                                    <constraint firstItem="gj1-9G-vwL" firstAttribute="bottom" secondItem="meX-Fp-zCX" secondAttribute="bottom" id="qWr-UC-OyP"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="v4o-Mn-rmj"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="v4o-Mn-rmj"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="IUu-HK-WYM" appends="YES" id="7UD-by-v89"/>
                                 </connections>
@@ -79,9 +74,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cameraButton" destination="02i-Lm-pY6" id="e4r-oT-VRd"/>
                         <outlet property="previewView" destination="5nN-lk-uog" id="bNB-jw-EGF"/>
-                        <outlet property="recordButton" destination="meX-Fp-zCX" id="jat-5T-S61"/>
                         <outlet property="snapButton" destination="gj1-9G-vwL" id="67d-Ml-x4U"/>
                     </connections>
                 </viewController>
@@ -106,12 +99,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="815-tA-lec">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="151" y="47" width="99" height="21"/>
+                                </variation>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="57A-hp-v3e">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="80" y="92" width="240" height="218"/>
+                                </variation>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bv-bt-iMq">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Return"/>
+                                <state key="normal" title="Re-take"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="177" y="497" width="46" height="30"/>
+                                    <rect key="frame" x="173" y="497" width="54" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="returnButtonPressed:" destination="NcJ-P2-BkD" eventType="touchUpInside" id="qpV-nq-DDL"/>
@@ -123,15 +133,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="815-tA-lec"/>
+                                <exclude reference="57A-hp-v3e"/>
                                 <exclude reference="6Bv-bt-iMq"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
+                                <include reference="815-tA-lec"/>
+                                <include reference="57A-hp-v3e"/>
                                 <include reference="6Bv-bt-iMq"/>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="57A-hp-v3e" id="jKW-0R-VOg"/>
+                        <outlet property="label" destination="815-tA-lec" id="x1p-JK-6N9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ggE-Cr-141" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
