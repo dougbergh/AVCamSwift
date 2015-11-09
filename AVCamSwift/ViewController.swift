@@ -455,15 +455,15 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                     
                 }
                 
-                self.movieFileOutput!.connectionWithMediaType(AVMediaTypeVideo).videoOrientation =
-                    AVCaptureVideoOrientation(rawValue: (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation.rawValue )!
-                
-                // Turning OFF flash for video recording
-                ViewController.setFlashMode(AVCaptureFlashMode.Off, device: self.videoDeviceInput!.device)
-                
-                let outputFilePath: String = NSTemporaryDirectory().stringByAppendingPathComponent( "movie".stringByAppendingPathExtension("mov")!)
-                
-                self.movieFileOutput!.startRecordingToOutputFileURL(NSURL.fileURLWithPath(outputFilePath), recordingDelegate: self)
+//                self.movieFileOutput!.connectionWithMediaType(AVMediaTypeVideo).videoOrientation =
+//                    AVCaptureVideoOrientation(rawValue: (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation.rawValue )!
+//                
+//                // Turning OFF flash for video recording
+//                ViewController.setFlashMode(AVCaptureFlashMode.Off, device: self.videoDeviceInput!.device)
+//                
+//                let outputFilePath: String = NSTemporaryDirectory().stringByAppendingPathComponent( "movie".stringByAppendingPathExtension("mov")!)
+//                
+//                self.movieFileOutput!.startRecordingToOutputFileURL(NSURL.fileURLWithPath(outputFilePath), recordingDelegate: self)
                 
                 
             }else{
@@ -492,14 +492,14 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 if error == nil {
                     let data:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                     let image:UIImage = UIImage( data: data)!
-                    
-                    let libaray:ALAssetsLibrary = ALAssetsLibrary()
-                    let orientation: ALAssetOrientation = ALAssetOrientation(rawValue: image.imageOrientation.rawValue)!
-                    libaray.writeImageToSavedPhotosAlbum(image.CGImage, orientation: orientation, completionBlock: nil)
-                    
-                    print("save to album")
+//                    
+//                    let libaray:ALAssetsLibrary = ALAssetsLibrary()
+//                    let orientation: ALAssetOrientation = ALAssetOrientation(rawValue: image.imageOrientation.rawValue)!
+//                    libaray.writeImageToSavedPhotosAlbum(image.CGImage, orientation: orientation, completionBlock: nil)
+//                    
+//                    print("save to album")
 
-                    
+                    self.saveImage( image )
                     
                 }else{
 //                    print("Did not capture still image")
@@ -582,10 +582,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             })
             
         })
-
-        
-        
-        
     }
     
     @IBAction func focusAndExposeTap(gestureRecognizer: UIGestureRecognizer) {
@@ -597,6 +593,19 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         self.focusWithMode(AVCaptureFocusMode.AutoFocus, exposureMode: AVCaptureExposureMode.AutoExpose, point: devicePoint, monitorSubjectAreaChange: true)
         
+    }
+    
+    func saveImage (image:UIImage) {
+        
+        let nsDocumentDirectory = NSSearchPathDirectory.DocumentDirectory
+        let nsUserDomainMask = NSSearchPathDomainMask.UserDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+            
+        if paths.count > 0 {
+            let dirPath = paths[0]
+            let writePath = "\(dirPath)/Image2.png"
+            UIImagePNGRepresentation(image)!.writeToFile(writePath, atomically: true)
+        }
     }
 }
 
