@@ -17,22 +17,6 @@ class ImageViewController : UIViewController {
     @IBAction func returnButtonPressed(sender: UIButton) {
     }
     
-    var detailItem: String? {
-        didSet {
-            // Update the view.
-            self.configureView()
-        }
-    }
-    
-    func configureView() {
-        if let detail = self.detailItem {
-            if let imageView = self.imageView {
-                imageView.image = UIImage(named: detail)
-            }
-        }
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         findAndDisplayImage()
@@ -56,14 +40,3 @@ class ImageViewController : UIViewController {
         }
     }
 }
-//            do {
-//                let text2 = try NSString(contentsOfFile: imagePath, encoding: NSUTF8StringEncoding)
-//                print (text2)
-//            }
-//            catch {/* error handling here */}
-            
-
-//            imageView = UIImageView(image: image)
-//            imageView.frame = CGRect(x:30, y:30, width:160, height: 200)
-//            imageView.startAnimating()
-//            self.loadView()

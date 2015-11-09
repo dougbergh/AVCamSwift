@@ -40,7 +40,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBOutlet weak var previewView: AVCamPreviewView!
     @IBOutlet weak var snapButton: UIButton!
-    @IBOutlet weak var cameraButton: UIButton!
     
 
 
@@ -234,22 +233,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             }
             
         }else if context  == &RecordingContext{
-            let isRecording: Bool = change![NSKeyValueChangeNewKey]!.boolValue
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                if isRecording {
-                    self.cameraButton.enabled = false
-                    
-                }else{
-                    self.cameraButton.enabled = true
-                    
-                }
-                
-                
-            })
-            
-            
         }
         
         else{
@@ -445,76 +428,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
         })
     }
-    @IBAction func changeCamera(sender: AnyObject) {
-        
-        
-        
-        print("change camera")
-        
-        self.cameraButton.enabled = false
-        self.snapButton.enabled = false
-        
-        dispatch_async(self.sessionQueue, {
-            
-            let currentVideoDevice:AVCaptureDevice = self.videoDeviceInput!.device
-            let currentPosition: AVCaptureDevicePosition = currentVideoDevice.position
-            var preferredPosition: AVCaptureDevicePosition = AVCaptureDevicePosition.Unspecified
-            
-            switch currentPosition{
-            case AVCaptureDevicePosition.Front:
-                preferredPosition = AVCaptureDevicePosition.Back
-            case AVCaptureDevicePosition.Back:
-                preferredPosition = AVCaptureDevicePosition.Front
-            case AVCaptureDevicePosition.Unspecified:
-                preferredPosition = AVCaptureDevicePosition.Back
-                
-            }
-            
 
-            
-            let device:AVCaptureDevice = ViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: preferredPosition)
-            
-            var videoDeviceInput: AVCaptureDeviceInput?
-            
-            do {
-                videoDeviceInput = try AVCaptureDeviceInput(device: device)
-            } catch _ as NSError {
-                videoDeviceInput = nil
-            } catch {
-                fatalError()
-            }
-            
-            self.session!.beginConfiguration()
-            
-            self.session!.removeInput(self.videoDeviceInput)
-            
-            if self.session!.canAddInput(videoDeviceInput){
-       
-                NSNotificationCenter.defaultCenter().removeObserver(self, name:AVCaptureDeviceSubjectAreaDidChangeNotification, object:currentVideoDevice)
-                
-                ViewController.setFlashMode(AVCaptureFlashMode.Auto, device: device)
-                
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: device)
-                                
-                self.session!.addInput(videoDeviceInput)
-                self.videoDeviceInput = videoDeviceInput
-                
-            }else{
-                self.session!.addInput(self.videoDeviceInput)
-            }
-            
-            self.session!.commitConfiguration()
-            
-
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.snapButton.enabled = true
-                self.cameraButton.enabled = true
-            })
-            
-        })
-    }
-    
     @IBAction func focusAndExposeTap(gestureRecognizer: UIGestureRecognizer) {
         
         print("focusAndExposeTap")
@@ -536,13 +450,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             let dirPath = paths[0]
             let writePath = "\(dirPath)/Image.jpg"
             
-//            let data2: String = "HI MOM"
-//            do {
-//                try data2.writeToFile(writePath, atomically: true, encoding: NSUTF8StringEncoding)
-//            } catch {
-//                print( "ERROR writing file" )
-//            }
-
             data.writeToFile(writePath, atomically: true)
             print( "wrote to \(writePath)" )
         }
