@@ -36,9 +36,6 @@
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="View Image"/>
-                                        <variation key="widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="153" y="476" width="93" height="30"/>
-                                        </variation>
                                         <connections>
                                             <segue destination="NcJ-P2-BkD" kind="show" id="AxO-dI-5lS"/>
                                         </connections>

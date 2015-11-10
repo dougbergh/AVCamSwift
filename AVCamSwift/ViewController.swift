@@ -23,7 +23,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var sessionQueue: dispatch_queue_t!
     var session: AVCaptureSession?
     var videoDeviceInput: AVCaptureDeviceInput?
-    var movieFileOutput: AVCaptureMovieFileOutput?
     var stillImageOutput: AVCaptureStillImageOutput?
     
 
@@ -154,7 +153,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old , .New] , context: &SessionRunningAndDeviceAuthorizedContext)
             self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options:[.Old , .New], context: &CapturingStillImageContext)
-            self.addObserver(self, forKeyPath: "movieFileOutput.recording", options: [.Old , .New], context: &RecordingContext)
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput?.device)
             
@@ -190,7 +188,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 self.removeObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", context: &SessionRunningAndDeviceAuthorizedContext)
                 
                 self.removeObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", context: &CapturingStillImageContext)
-                self.removeObserver(self, forKeyPath: "movieFileOutput.recording", context: &RecordingContext)
                 
                 
             }
@@ -299,8 +296,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
     }
     
+    // This causes the screen to "flash" white when the user hits the 'snap' button
     func runStillImageCaptureAnimation(){
-        dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue(), {
             self.previewView.layer.opacity = 0.0
             print("opacity 0")
             UIView.animateWithDuration(0.25, animations: {
