@@ -38,7 +38,8 @@ class ImageViewController : UIViewController, UITableViewDelegate, UITableViewDa
             print( "reading from \(imagePath)" )
             
             let fileContent = NSData(contentsOfFile: imagePath)
-            let image:UIImage = UIImage(data: fileContent!)!
+            let directImage:UIImage = UIImage(data: fileContent!)!
+            let image:UIImage = UIImage(CGImage:directImage.CGImage!, scale: 1.0, orientation: .Up)
             imageView.image = image
         }
     }
