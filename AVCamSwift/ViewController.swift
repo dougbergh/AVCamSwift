@@ -65,9 +65,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             let videoDevice: AVCaptureDevice! = ViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
             var error: NSError? = nil
-            
 
-            
             var videoDeviceInput: AVCaptureDeviceInput?
             do {
                 videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
@@ -104,33 +102,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 
             }
             
-            
-            let audioDevice: AVCaptureDevice = AVCaptureDevice.devicesWithMediaType(AVMediaTypeAudio).first as! AVCaptureDevice
-            
-            var audioDeviceInput: AVCaptureDeviceInput?
-            
-            do {
-                audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
-            } catch let error2 as NSError {
-                error = error2
-                audioDeviceInput = nil
-            } catch {
-                fatalError()
-            }
-            
-            if error != nil{
-                print(error)
-                let alert = UIAlertController(title: "Error", message: error!.localizedDescription
-                    , preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-            if session.canAddInput(audioDeviceInput){
-                session.addInput(audioDeviceInput)
-            }
-            
-            
-            
             let stillImageOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
             if session.canAddOutput(stillImageOutput){
                 stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
@@ -138,11 +109,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 
                 self.stillImageOutput = stillImageOutput
             }
-            
-            
         })
-        
-        
     }
 
     
