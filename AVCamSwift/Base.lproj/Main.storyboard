@@ -34,9 +34,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4o-Mn-rmj">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="View Image"/>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="161" y="476" width="79" height="30"/>
+                                        <variation key="widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="153" y="476" width="93" height="30"/>
                                         </variation>
                                         <connections>
                                             <segue destination="NcJ-P2-BkD" kind="show" id="AxO-dI-5lS"/>
@@ -46,17 +47,27 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="v4o-Mn-rmj" firstAttribute="centerX" secondItem="5nN-lk-uog" secondAttribute="centerX" id="5ir-RJ-tbl"/>
                                     <constraint firstAttribute="bottom" secondItem="gj1-9G-vwL" secondAttribute="bottom" constant="22" id="8Dg-dJ-h7Z"/>
                                     <constraint firstAttribute="centerX" secondItem="gj1-9G-vwL" secondAttribute="centerX" id="Hje-82-NFD"/>
+                                    <constraint firstItem="gj1-9G-vwL" firstAttribute="top" secondItem="v4o-Mn-rmj" secondAttribute="bottom" constant="36" id="J54-5B-0ba"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="v4o-Mn-rmj"/>
                                     </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="5ir-RJ-tbl"/>
+                                        <exclude reference="J54-5B-0ba"/>
+                                    </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="v4o-Mn-rmj"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="5ir-RJ-tbl"/>
+                                        <include reference="J54-5B-0ba"/>
                                     </mask>
                                 </variation>
                                 <connections>
