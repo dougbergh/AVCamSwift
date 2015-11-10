@@ -44,6 +44,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
     // MARK: Override methods
 
+    // runs when the CamViewController takes control
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -55,12 +56,13 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         self.checkDeviceAuthorizationStatus()
         
-
-        
         let sessionQueue: dispatch_queue_t = dispatch_queue_create("session queue",DISPATCH_QUEUE_SERIAL)
         
         self.sessionQueue = sessionQueue
-        dispatch_async(sessionQueue, {
+        
+        
+        dispatch_async(self.sessionQueue, {
+            
             self.backgroundRecordId = UIBackgroundTaskInvalid
             
             let videoDevice: AVCaptureDevice! = ViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
@@ -88,6 +90,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 session.addInput(videoDeviceInput)
                 self.videoDeviceInput = videoDeviceInput
                 
+
                 dispatch_async(dispatch_get_main_queue(), {
                     // Why are we dispatching this to the main queue?
                     // Because AVCaptureVideoPreviewLayer is the backing layer for AVCamPreviewView and UIView can only be manipulated on main thread.
@@ -95,9 +98,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
                     let orientation: AVCaptureVideoOrientation =  AVCaptureVideoOrientation(rawValue: self.interfaceOrientation.rawValue)!
                     
-                    
                     (self.previewView.layer as! AVCaptureVideoPreviewLayer).connection.videoOrientation = orientation
-                    
+
                 })
                 
             }
@@ -110,13 +112,13 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 self.stillImageOutput = stillImageOutput
             }
         })
+        
+        
     }
 
     
     override func viewWillAppear(animated: Bool) {
         dispatch_async(self.sessionQueue, {
-            
- 
             
             self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old , .New] , context: &SessionRunningAndDeviceAuthorizedContext)
             self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options:[.Old , .New], context: &CapturingStillImageContext)
