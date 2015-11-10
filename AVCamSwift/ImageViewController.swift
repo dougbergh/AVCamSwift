@@ -15,6 +15,7 @@ class ImageViewController : UIViewController {
     @IBOutlet weak var imageView: UIImageView!
 
     @IBAction func returnButtonPressed(sender: UIButton) {
+        print("return pressed")
     }
     
     override func viewDidLoad() {

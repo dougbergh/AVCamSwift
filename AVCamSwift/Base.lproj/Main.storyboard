@@ -27,6 +27,9 @@
                                         <state key="normal" title="Snap">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="178" y="542" width="46" height="36"/>
+                                        </variation>
                                         <connections>
                                             <action selector="snapStillImage:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="osp-gP-i9e"/>
                                         </connections>
@@ -108,14 +111,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="815-tA-lec">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="815-tA-lec">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="151" y="47" width="99" height="21"/>
+                                    <rect key="frame" x="171" y="45" width="58" height="21"/>
                                 </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="57A-hp-v3e">
@@ -130,11 +133,22 @@
                                 <animations/>
                                 <state key="normal" title="Re-take"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="173" y="497" width="54" height="30"/>
+                                    <rect key="frame" x="80" y="535" width="54" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="returnButtonPressed:" destination="NcJ-P2-BkD" eventType="touchUpInside" id="qpV-nq-DDL"/>
                                     <segue destination="vXZ-lx-hvc" kind="show" id="UiG-Qu-9g9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMU-9S-S6P">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Barcode"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="262" y="535" width="58" height="30"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="f8n-9J-nzX" kind="show" id="18b-Kh-PHv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -145,6 +159,7 @@
                                 <exclude reference="815-tA-lec"/>
                                 <exclude reference="57A-hp-v3e"/>
                                 <exclude reference="6Bv-bt-iMq"/>
+                                <exclude reference="YMU-9S-S6P"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -152,6 +167,7 @@
                                 <include reference="815-tA-lec"/>
                                 <include reference="57A-hp-v3e"/>
                                 <include reference="6Bv-bt-iMq"/>
+                                <include reference="YMU-9S-S6P"/>
                             </mask>
                         </variation>
                     </view>
@@ -164,5 +180,61 @@
             </objects>
             <point key="canvasLocation" x="937.5" y="188"/>
         </scene>
+        <!--Barcode View Controller-->
+        <scene sceneID="3Lz-fH-eCT">
+            <objects>
+                <viewController id="f8n-9J-nzX" customClass="BarcodeViewController" customModule="AVCamSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IOR-7z-hgD"/>
+                        <viewControllerLayoutGuide type="bottom" id="BVc-45-O6t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0fj-a6-bt9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="taw-jk-4dC">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES"/>
+                                </accessibility>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="73" y="99" width="240" height="214"/>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="taw-jk-4dC"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="taw-jk-4dC"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="zzK-DQ-aDp" appends="YES" id="9Ln-cj-Pld"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="taw-jk-4dC" id="ejA-BJ-WAv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wic-U2-B7S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="zzK-DQ-aDp">
+                    <connections>
+                        <segue destination="NcJ-P2-BkD" kind="show" id="enH-l2-oTN"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1617" y="187"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="enH-l2-oTN"/>
+    </inferredMetricsTieBreakers>
 </document>
