@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 
-class ImageViewController : UIViewController {
+class ImageViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var label: UILabel!
 
     @IBOutlet weak var imageView: UIImageView!
 
+    @IBOutlet var driverLicenseTable: UITableView!
+    
     @IBAction func returnButtonPressed(sender: UIButton) {
         print("return pressed")
     }
@@ -40,4 +42,34 @@ class ImageViewController : UIViewController {
             imageView.image = image
         }
     }
+    
+    var driverLicense:[(key:String,value:String)] = []
+    
+    //        driverLicense = (shoCardPresenter?.getDriverLicense())!
+    //        driverLicenseTable.reloadData()     // with any luck, results in calls to TableView methods
+
+    // UITableViewDataSource protocol methods
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return driverLicense.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: UITableViewCellStyle.Value2, reuseIdentifier: nil)
+        
+        cell.textLabel?.text = driverLicense[indexPath.row].key
+        cell.detailTextLabel?.text = driverLicense[indexPath.row].value
+        
+        return cell
+    }
+    
+    func setDriverLicense(params: [(key: String, value: String)]) {
+        driverLicense = params
+        driverLicenseTable.reloadData()
+    }
+    
 }

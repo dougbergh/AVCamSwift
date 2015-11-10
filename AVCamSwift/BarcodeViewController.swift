@@ -17,13 +17,11 @@ import UIKit
 import AVFoundation
 import LocalAuthentication
 
-class BarcodeViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UITableViewDelegate, AVCaptureMetadataOutputObjectsDelegate, UITableViewDataSource {
+class BarcodeViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, AVCaptureMetadataOutputObjectsDelegate {
     
 //    var shoCardPresenter: ShoCardPresenter? = nil
     
     @IBOutlet var cameraView: UIView!
-    
-    @IBOutlet var driverLicenseTable: UITableView!
     
     let captureSession = AVCaptureSession()
     var previewLayer : AVCaptureVideoPreviewLayer!
@@ -32,8 +30,6 @@ class BarcodeViewController: UIViewController, UIScrollViewDelegate, UITextField
     
     // If we find a device we'll store it here for later use
     var captureDevice : AVCaptureDevice?
-    
-    var driverLicense:[(key:String,value:String)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,37 +87,11 @@ class BarcodeViewController: UIViewController, UIScrollViewDelegate, UITextField
             
         }
         
-//        driverLicense = (shoCardPresenter?.getDriverLicense())!
-//        driverLicenseTable.reloadData()     // with any luck, results in calls to TableView methods
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // UITableViewDataSource protocol methods
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return driverLicense.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell(style: UITableViewCellStyle.Value2, reuseIdentifier: nil)
-        
-        cell.textLabel?.text = driverLicense[indexPath.row].key
-        cell.detailTextLabel?.text = driverLicense[indexPath.row].value
-        
-        return cell
-    }
-    
-    func setDriverLicense(params: [(key: String, value: String)]) {
-        driverLicense = params
-        driverLicenseTable.reloadData()
     }
     
     func updateDeviceSettings(focusValue : Float, isoValue : Float) {
@@ -220,6 +190,14 @@ class BarcodeViewController: UIViewController, UIScrollViewDelegate, UITextField
             
             self.captureSession.stopRunning()
             running = false
+            
+            // present the IDViewController, which shows the image and table            
+            let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("idViewController") as UIViewController
+            // .instantiatViewControllerWithIdentifier() returns AnyObject! this must be downcast to utilize it
+            
+            self.presentViewController(viewController, animated: false, completion: nil)
+            
+            // only process the first one
             break
         }
     }
