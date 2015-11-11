@@ -16,7 +16,7 @@ var SessionRunningAndDeviceAuthorizedContext = "SessionRunningAndDeviceAuthorize
 var CapturingStillImageContext = "CapturingStillImageContext"
 var RecordingContext = "RecordingContext"
 
-class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     // MARK: property
     
@@ -65,7 +65,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             self.backgroundRecordId = UIBackgroundTaskInvalid
             
-            let videoDevice: AVCaptureDevice! = ViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
+            let videoDevice: AVCaptureDevice! = CaptureViewController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: AVCaptureDevicePosition.Back)
             var error: NSError? = nil
 
             var videoDeviceInput: AVCaptureDeviceInput?
@@ -130,7 +130,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             self.runtimeErrorHandlingObserver = NSNotificationCenter.defaultCenter().addObserverForName(AVCaptureSessionRuntimeErrorNotification, object: self.session, queue: nil, usingBlock: {
                 (note: NSNotification?) in
-                var strongSelf: ViewController = weakSelf!
+                var strongSelf: CaptureViewController = weakSelf!
                 dispatch_async(strongSelf.sessionQueue, {
                     if let sess = strongSelf.session{
                         sess.startRunning()
@@ -372,7 +372,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo).videoOrientation = videoOrientation
             
             // Flash set to Auto for Still Capture
-            ViewController.setFlashMode(AVCaptureFlashMode.Auto, device: self.videoDeviceInput!.device)
+            CaptureViewController.setFlashMode(AVCaptureFlashMode.Auto, device: self.videoDeviceInput!.device)
 
             
             

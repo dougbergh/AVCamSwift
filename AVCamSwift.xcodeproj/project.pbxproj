@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB952BBF1A0F657800559378 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB952BBE1A0F657800559378 /* AppDelegate.swift */; };
-		CB952BC11A0F657800559378 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB952BC01A0F657800559378 /* ViewController.swift */; };
+		CB952BC11A0F657800559378 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB952BC01A0F657800559378 /* CaptureViewController.swift */; };
 		CB952BC41A0F657800559378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB952BC21A0F657800559378 /* Main.storyboard */; };
 		CB952BC61A0F657800559378 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB952BC51A0F657800559378 /* Images.xcassets */; };
 		CB952BC91A0F657800559378 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB952BC71A0F657800559378 /* LaunchScreen.xib */; };
@@ -32,7 +32,7 @@
 		CB952BB91A0F657800559378 /* AVCamSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVCamSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB952BBD1A0F657800559378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB952BBE1A0F657800559378 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CB952BC01A0F657800559378 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CB952BC01A0F657800559378 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		CB952BC31A0F657800559378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB952BC51A0F657800559378 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CB952BC81A0F657800559378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 				CB952BBE1A0F657800559378 /* AppDelegate.swift */,
 				CBA6B5DB1A1ACE1400B5DF1B /* AVCamPreviewView.swift */,
 				D5E070A51BF27BEE0044E73E /* BarcodeViewController.swift */,
-				CB952BC01A0F657800559378 /* ViewController.swift */,
+				CB952BC01A0F657800559378 /* CaptureViewController.swift */,
 				D5DA70471BF1117700E22B4A /* ImageViewController.swift */,
 				CB952BC21A0F657800559378 /* Main.storyboard */,
 				CB952BC51A0F657800559378 /* Images.xcassets */,
@@ -224,7 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5E070A61BF27BEE0044E73E /* BarcodeViewController.swift in Sources */,
-				CB952BC11A0F657800559378 /* ViewController.swift in Sources */,
+				CB952BC11A0F657800559378 /* CaptureViewController.swift in Sources */,
 				D5DA70481BF1117700E22B4A /* ImageViewController.swift in Sources */,
 				CBA6B5DC1A1ACE1400B5DF1B /* AVCamPreviewView.swift in Sources */,
 				CB952BBF1A0F657800559378 /* AppDelegate.swift in Sources */,

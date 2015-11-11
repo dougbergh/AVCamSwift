@@ -114,7 +114,7 @@
         <!--Cam View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" userLabel="Cam View Controller" customClass="ViewController" customModule="AVCamSwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" userLabel="Cam View Controller" customClass="CaptureViewController" customModule="AVCamSwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LCU-Bq-hhg"/>
                         <viewControllerLayoutGuide type="bottom" id="Myx-V2-VGl"/>
@@ -440,7 +440,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="AxO-dI-5lS"/>
         <segue reference="UiG-Qu-9g9"/>
-        <segue reference="enH-l2-oTN"/>
     </inferredMetricsTieBreakers>
 </document>
