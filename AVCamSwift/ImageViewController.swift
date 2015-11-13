@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class ImageViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBAction func retakeButton(sender: AnyObject) {
+    }
     
     @IBOutlet weak var label: UILabel!
 
@@ -37,10 +39,11 @@ class ImageViewController : UIViewController, UITableViewDelegate, UITableViewDa
             
             print( "reading from \(imagePath)" )
             
-            let fileContent = NSData(contentsOfFile: imagePath)
-            let directImage:UIImage = UIImage(data: fileContent!)!
-            let image:UIImage = UIImage(CGImage:directImage.CGImage!, scale: 1.0, orientation: .Up)
-            imageView.image = image
+            if let fileContent = NSData(contentsOfFile: imagePath) {
+                let directImage:UIImage = UIImage(data: fileContent)!
+                let image:UIImage = UIImage(CGImage:directImage.CGImage!, scale: 1.0, orientation: .Up)
+                imageView.image = image
+            }
         }
     }
     
